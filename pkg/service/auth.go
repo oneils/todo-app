@@ -13,10 +13,12 @@ type AuthService struct {
 	repo repository.Authorization
 }
 
+// NewAuthService creates a new instance of AuthService
 func NewAuthService(repo repository.Authorization) *AuthService {
 	return &AuthService{repo: repo}
 }
 
+// CreateUser generates a hashed password and creates a new user
 func (a AuthService) CreateUser(user todo.User) (int, error) {
 	user.Password = generatePasswordHash(user.Password)
 	return a.repo.CreateUser(user)

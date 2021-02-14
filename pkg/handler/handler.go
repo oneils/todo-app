@@ -9,10 +9,12 @@ type Handler struct {
 	services *service.Service
 }
 
+// New creates a new Handler with service.Service specified
 func New(services *service.Service) *Handler {
 	return &Handler{services: services}
 }
 
+// InitRoutes create a new router for te app
 func (h *Handler) InitRoutes() *gin.Engine {
 	router := gin.New()
 

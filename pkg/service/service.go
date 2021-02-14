@@ -21,6 +21,7 @@ type Service struct {
 	TodoItem
 }
 
+// NewService creates a new instance of Service
 func NewService(repos *repository.Repository) *Service {
 	return &Service{
 		Authorization: NewAuthService(repos.Authorization),

@@ -10,10 +10,12 @@ type AuthPostgres struct {
 	db *sqlx.DB
 }
 
+// NewAuthPostgres creates a new AuthPostgres
 func NewAuthPostgres(db *sqlx.DB) *AuthPostgres {
 	return &AuthPostgres{db: db}
 }
 
+// CreateUser saves a new user in Post
 func (r AuthPostgres) CreateUser(user todo.User) (int, error) {
 	var id int
 
