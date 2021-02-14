@@ -27,3 +27,13 @@ func (r AuthPostgres) CreateUser(user todo.User) (int, error) {
 
 	return id, nil
 }
+
+// GetUser finds a user in DB according to the username and hashed password specified.
+func (r AuthPostgres) GetUser(username string, passwordHash string) (todo.User, error) {
+	var user todo.User
+
+	query := fmt.Sprintf("SELECT id from %s WHERE username=$1 and password_hash=$2", usersTable)
+	err := r.db.Get(&user, query, username, passwordHash)
+
+	return user, err
+}
