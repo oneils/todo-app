@@ -3,6 +3,10 @@ package handler
 import (
 	"github.com/gin-gonic/gin"
 	"github.com/oneils/todo-app/pkg/service"
+	"github.com/swaggo/files"       // swagger embed files
+	"github.com/swaggo/gin-swagger" // gin-swagger middleware
+
+	_ "github.com/oneils/todo-app/docs" // init generated docs
 )
 
 type Handler struct {
@@ -17,6 +21,9 @@ func New(services *service.Service) *Handler {
 // InitRoutes create a new router for te app
 func (h *Handler) InitRoutes() *gin.Engine {
 	router := gin.New()
+
+	// add swagger to route
+	router.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
 
 	auth := router.Group("/auth")
 	{

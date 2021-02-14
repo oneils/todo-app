@@ -12,6 +12,16 @@ import (
 	"os"
 )
 
+// @title TodoList APP
+// @version 1.0
+// @description API Service for TodoList application
+
+// @host localhost:8080
+// @basePath /
+
+// @securityDefinitions.apiKey ApiKeyAuth
+// @in header
+// @name Authorization
 func main() {
 	if err := initConfig(); err != nil {
 		logrus.Fatalf("Error while reading config file %s", err.Error())

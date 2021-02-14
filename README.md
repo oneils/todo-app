@@ -29,3 +29,9 @@ where `1` is a failed version of migration (see the name of sql file with migrat
 
 More details here: https://github.com/golang-migrate/migrate/issues/282#issuecomment-530743258
 
+Generate swagger
+
+```bash
+swag init -g cmd/main.go
+```
+
