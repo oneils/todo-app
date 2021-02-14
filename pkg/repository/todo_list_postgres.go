@@ -38,3 +38,25 @@ func (r TodoListPostgres) Create(userId int, list todo.TodoList) (int, error) {
 
 	return todoListId, tx.Commit()
 }
+
+// FindAll finds all TodoList for specified userId
+func (r TodoListPostgres) FindAll(userId int) ([]todo.TodoList, error) {
+	var list []todo.TodoList
+
+	query := fmt.Sprintf("SELECT tl.id, tl.title, tl.description FROM %s tl INNER JOIN %s ul ON tl.id = ul.list_id WHERE ul.user_id = $1",
+		todoListsTable, usersListTable)
+	err := r.db.Select(&list, query, userId)
+	return list, err
+}
+
+// FindById finds TodoList by specified listId
+func (r TodoListPostgres) FindById(userId, id int) (todo.TodoList, error) {
+	var todolist todo.TodoList
+
+	query := fmt.Sprintf(`SELECT tl.id, tl.title, tl.description FROM %s tl
+								INNER JOIN %s ul on tl.id = ul.list_id WHERE ul.user_id = $1 AND ul.list_id = $2`,
+		todoListsTable, usersListTable)
+	err := r.db.Get(&todolist, query, userId, id)
+
+	return todolist, err
+}
