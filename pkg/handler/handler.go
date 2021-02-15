@@ -13,8 +13,8 @@ type Handler struct {
 	services *service.Service
 }
 
-// New creates a new Handler with service.Service specified
-func New(services *service.Service) *Handler {
+// NewHandler creates a new Handler with service.Service specified
+func NewHandler(services *service.Service) *Handler {
 	return &Handler{services: services}
 }
 

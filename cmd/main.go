@@ -48,7 +48,7 @@ func main() {
 
 	repos := repository.New(db)
 	services := service.NewService(repos)
-	handlers := handler.New(services)
+	handlers := handler.NewHandler(services)
 
 	server := new(todo.Server)
 
