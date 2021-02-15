@@ -1,0 +1,21 @@
+version: '3.8'
+
+services:
+  todo-app:
+    build: ./
+    ports:
+      - 8080:8080
+    depends_on:
+      - db
+    environment:
+      - DB_PASSWORD=qwert
+
+  db:
+    restart: always
+    image: postgres:latest
+    volumes:
+      - ./.database/postgres/data:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_PASSWORD=qwert
+    ports:
+      - 5436:5432
