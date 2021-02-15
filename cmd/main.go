@@ -1,6 +1,7 @@
 package main
 
 import (
+	"context"
 	_ "github.com/lib/pq"
 	"github.com/oneils/todo-app"
 	"github.com/oneils/todo-app/pkg/handler"
@@ -10,6 +11,8 @@ import (
 	"github.com/spf13/viper"
 	"github.com/subosito/gotenv"
 	"os"
+	"os/signal"
+	"syscall"
 )
 
 // @title TodoList APP
@@ -49,8 +52,26 @@ func main() {
 
 	server := new(todo.Server)
 
-	if err := server.Run(viper.GetString("port"), handlers.InitRoutes()); err != nil {
-		logrus.Fatalf("Error while starting http server %s", err.Error())
+	go func() {
+		if err := server.Run(viper.GetString("port"), handlers.InitRoutes()); err != nil {
+			logrus.Fatalf("Error while starting http server %s", err.Error())
+		}
+	}()
+
+	logrus.Printf("TODO App started on http://localhost:%s", viper.GetString("port"))
+
+	quit := make(chan os.Signal, 1)
+	signal.Notify(quit, syscall.SIGTERM, syscall.SIGINT)
+	<-quit
+
+	logrus.Println("TODO App is shutting down")
+
+	if err := server.Shutdown(context.Background()); err != nil {
+		logrus.Errorf("error occurred while shutting down the server: %s", err.Error())
+	}
+
+	if err := db.Close(); err != nil {
+		logrus.Errorf("error occurred while closing DB connectionsr: %s", err.Error())
 	}
 }
 
