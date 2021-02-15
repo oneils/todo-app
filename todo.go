@@ -30,11 +30,11 @@ type ListsItem struct {
 type UpdateTodoListRequest struct {
 	Title       *string `json:"title"`
 	Description *string `json:"description"`
-	Done        *bool   `json:"done"`
 }
 
-func (i UpdateTodoListRequest) Validate() error {
-	if i.Title == nil && i.Description == nil && i.Done == nil {
+// ValidateNoUpdate validates if UpdateTodoListRequest updates or not. Return error when there were no changes for UpdateTodoListRequest.
+func (i UpdateTodoListRequest) ValidateNoUpdate() error {
+	if i.Title == nil && i.Description == nil {
 		return errors.New("update structure has no values")
 	}
 

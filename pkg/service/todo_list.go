@@ -36,6 +36,8 @@ func (s TodoListService) Delete(userId, id int) error {
 
 // Update updates the specified TodoList
 func (s TodoListService) Update(userId, id int, updateListRequest todo.UpdateTodoListRequest) error {
-
+	if err := updateListRequest.ValidateNoUpdate(); err != nil {
+		return err
+	}
 	return s.repo.Update(userId, id, updateListRequest)
 }
