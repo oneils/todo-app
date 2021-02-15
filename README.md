@@ -1,6 +1,10 @@
 # todo-app
 A sample todo app example written in go
 
+Create `.env` file in the root of the project with `DB_PASSWOD` property:
+
+``DB_PASSWORD=qwert``
+
 Run `postgres` in docker container
 
 ```bash
@@ -18,6 +22,14 @@ migrate create -ext sql -dir db/migrations -seq init
 ```
 
 Run DB migrations
+
+Via Docker:
+
+```bash
+docker run -v /full-path-to/todo-app/db/migrations:/migrations --network host migrate/migrate -path=/migrations/ -database 'postgres://postgres:qwert@localhost:5432/postgres?sslmode=disable' up
+```
+
+or via binary file from the root of the project
 
 ```bash
 migrate -path db/migrations -database 'postgres://postgres:qwert@localhost:5432/postgres?sslmode=disable' up

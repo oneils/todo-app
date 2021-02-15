@@ -23,6 +23,8 @@ definitions:
         type: integer
       title:
         type: string
+    required:
+    - title
     type: object
   todo.User:
     properties:
@@ -45,6 +47,39 @@ info:
   version: "1.0"
 paths:
   /api/lists:
+    get:
+      consumes:
+      - application/json
+      description: Retrieves all TODO lists
+      operationId: get-all-list
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: slice
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/handler.errorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/handler.errorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/handler.errorResponse'
+        default:
+          description: ""
+          schema:
+            $ref: '#/definitions/handler.errorResponse'
+      security:
+      - ApiKeyAuth: []
+      summary: Get all TODO lists
+      tags:
+      - lists
     post:
       consumes:
       - application/json
@@ -69,7 +104,7 @@ paths:
           schema:
             $ref: '#/definitions/handler.errorResponse'
         "404":
-          description: Bad Request
+          description: Not Found
           schema:
             $ref: '#/definitions/handler.errorResponse'
         "500":
@@ -83,6 +118,125 @@ paths:
       security:
       - ApiKeyAuth: []
       summary: Create todo list
+      tags:
+      - lists
+  /api/lists/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: Deletes the specified TODO list
+      operationId: delete-list
+      parameters:
+      - description: TODO List ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: TodoList
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/handler.errorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/handler.errorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/handler.errorResponse'
+        default:
+          description: ""
+          schema:
+            $ref: '#/definitions/handler.errorResponse'
+      security:
+      - ApiKeyAuth: []
+      summary: Delete specified todo list
+      tags:
+      - lists
+    get:
+      consumes:
+      - application/json
+      description: get list by id
+      operationId: get-list-by-id
+      parameters:
+      - description: TodoList ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/todo.TodoList'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/handler.errorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/handler.errorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/handler.errorResponse'
+        default:
+          description: ""
+          schema:
+            $ref: '#/definitions/handler.errorResponse'
+      security:
+      - ApiKeyAuth: []
+      summary: Get List By Id
+      tags:
+      - lists
+    put:
+      consumes:
+      - application/json
+      description: Updates the specified TODO list
+      operationId: update-list
+      parameters:
+      - description: list info
+        in: body
+        name: input
+        required: true
+        schema:
+          $ref: '#/definitions/todo.TodoList'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: TodoList
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/handler.errorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/handler.errorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/handler.errorResponse'
+        default:
+          description: ""
+          schema:
+            $ref: '#/definitions/handler.errorResponse'
+      security:
+      - ApiKeyAuth: []
+      summary: Update specified todo list
       tags:
       - lists
   /auth/sign-in:
@@ -110,7 +264,7 @@ paths:
           schema:
             $ref: '#/definitions/handler.errorResponse'
         "404":
-          description: Bad Request
+          description: Not Found
           schema:
             $ref: '#/definitions/handler.errorResponse'
         "500":
@@ -149,7 +303,7 @@ paths:
           schema:
             $ref: '#/definitions/handler.errorResponse'
         "404":
-          description: Bad Request
+          description: Not Found
           schema:
             $ref: '#/definitions/handler.errorResponse'
         "500":

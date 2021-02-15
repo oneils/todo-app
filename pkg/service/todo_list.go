@@ -28,3 +28,14 @@ func (s TodoListService) GetAll(userId int) ([]todo.TodoList, error) {
 func (s TodoListService) FindById(userId, id int) (todo.TodoList, error) {
 	return s.repo.FindById(userId, id)
 }
+
+// Delete deletes the list for specified user
+func (s TodoListService) Delete(userId, id int) error {
+	return s.repo.Delete(userId, id)
+}
+
+// Update updates the specified TodoList
+func (s TodoListService) Update(userId, id int, updateListRequest todo.UpdateTodoListRequest) error {
+
+	return s.repo.Update(userId, id, updateListRequest)
+}
