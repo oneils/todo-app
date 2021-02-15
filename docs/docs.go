@@ -32,9 +32,6 @@ var doc = `{
                     }
                 ],
                 "description": "Retrieves all TODO lists",
-                "consumes": [
-                    "application/json"
-                ],
                 "produces": [
                     "application/json"
                 ],
@@ -47,7 +44,10 @@ var doc = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "type": "slice"
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/todo.TodoList"
+                            }
                         }
                     },
                     "400": {

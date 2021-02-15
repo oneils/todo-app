@@ -54,9 +54,8 @@ type allListsResponse struct {
 // @Tags lists
 // @Description Retrieves all TODO lists
 // @ID get-all-list
-// @Accept  json
 // @Produce  json
-// @Success 200 {slice} TodoList 1
+// @Success 200 {object} []todo.TodoList
 // @Failure 400,404 {object} errorResponse
 // @Failure 500 {object} errorResponse
 // @Failure default {object} errorResponse

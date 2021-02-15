@@ -48,8 +48,6 @@ info:
 paths:
   /api/lists:
     get:
-      consumes:
-      - application/json
       description: Retrieves all TODO lists
       operationId: get-all-list
       produces:
@@ -58,7 +56,9 @@ paths:
         "200":
           description: OK
           schema:
-            type: slice
+            items:
+              $ref: '#/definitions/todo.TodoList'
+            type: array
         "400":
           description: Bad Request
           schema:
